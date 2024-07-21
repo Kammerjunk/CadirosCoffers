@@ -10,8 +10,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CadirosCoffers.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/fontawesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/brands.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/solid.min.css" asp-append-version="true" />
 </head>
 <body>
+    @Html.AntiForgeryToken()
+
     <main>
         <!-- Sidebar -->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white sidebar">
@@ -32,13 +37,42 @@
             </ul>
             <hr>
             <div class="d-flex row align-items-center mb-3">
-                <a id="btnCollapse" class="text-decoration-none text-white" href="#">
+                <a id="btnCollapse" class="col text-decoration-none float-left text-white" href="#">
                     <span class="fs-6">Hide/Show Acts</span>
+                </a>
+                <a id="btnLogin" role="button" class="col-auto float-end" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fa-solid fa-lock"></i>
                 </a>
             </div>
         </div>
         @RenderBody()
     </main>
+
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledBy="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="loginModalLabel" class="modal-title">Login</h5>
+                </div>
+                <form id="formLoginModal">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <input id="inputUsernameModal" type="text" class="form-control" placeholder="Username" />
+                            </div>
+                            <div class="col">
+                                <input id="inputPasswordModal" type="password" class="form-control" placeholder="Password" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="btnLoginModal" type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

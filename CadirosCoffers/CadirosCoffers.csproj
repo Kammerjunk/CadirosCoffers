@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\res\zones\" />
   </ItemGroup>
 

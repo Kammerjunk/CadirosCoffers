@@ -94,6 +94,28 @@ namespace CadirosCoffers.Data
             return zones;
         }
 
+        public string GetSaltForUser(string username)
+        {
+            var parameters = new { Username = username };
+
+            using SqliteConnection conn = new(databaseOptions.ConnectionString);
+            conn.Open();
+            string salt = conn.QuerySingle<string>($"SELECT Salt FROM User WHERE Username = '{username}'");
+
+            return salt;
+        }
+
+        public bool GetPasswordMatch(string username, string passwordHash)
+        {
+            var parameters = new { Username = username, Hash = passwordHash };
+
+            using SqliteConnection conn = new( databaseOptions.ConnectionString);
+            conn.Open();
+            long match = conn.QuerySingle<long>(GetQueryText("GetPasswordMatch"), parameters);
+
+            return match == 1;
+        }
+
 
 
         private string GetQueryText(string queryFile)
