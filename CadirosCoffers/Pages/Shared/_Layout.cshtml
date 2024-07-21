@@ -1,0 +1,48 @@
+﻿@using CadirosCoffers.Model
+@model BaseViewModel
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cadiro's Coffers</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CadirosCoffers.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <main>
+        <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white sidebar">
+            <a class="d-flex align-items-center mb-3 text-decoration-none text-white" href="/">
+                <span class="fs-4">Cadiro's Coffers</span>
+            </a>
+            <hr>
+            <h4>Builds</h4>
+            <ul class="nav nav-pills flex-column mb-auto">
+                @foreach (BuildSimple build in Model.AvailableBuilds ?? Enumerable.Empty<BuildSimple>())
+                {
+                    <li>
+                        <a class="nav-link text-white build-selector" data-build="@build.Id" href="#">
+                            @build.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+            <hr>
+            <div class="d-flex row align-items-center mb-3">
+                <a id="btnCollapse" class="text-decoration-none text-white" href="#">
+                    <span class="fs-6">Hide/Show Acts</span>
+                </a>
+            </div>
+        </div>
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

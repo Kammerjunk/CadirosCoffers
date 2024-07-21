@@ -1,0 +1,1 @@
+﻿SELECT BuildId AS Id, Name FROM Build WHERE BuildId = @BuildId
