@@ -28,6 +28,15 @@ namespace CadirosCoffers.Data
             return build;
         }
 
+        public void CreateNewBuild(string id, string name, string version)
+        {
+            var parameters = new { BuildId = id, Name = name, GameVersion = version };
+
+            using SqliteConnection conn = new(databaseOptions.ConnectionString);
+            conn.Open();
+            conn.Execute(GetQueryText("CreateNewBuild"), parameters);
+        }
+
         public IEnumerable<Step> GetActStepsForBuild(string buildId, int actNumber)
         {
             var parameters = new { BuildId = buildId, ActNumber = actNumber };

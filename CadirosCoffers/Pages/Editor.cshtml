@@ -1,0 +1,63 @@
+﻿@page
+@using CadirosCoffers.Model
+@model CadirosCoffers.Pages.EditorModel
+@{
+    ViewData["Title"] = "Build Editor";
+}
+
+@section Scripts {
+    <script type="module" src="~/js/Editor.js"></script>
+}
+
+<div class="d-flex flex-column px-3 mt-3 main-content">
+    <div id="rowSelectBuild" class="row">
+        <div class="col-3">
+            <select id="selBuild" class="form-select">
+                <option value="default">Choose...</option>
+                <option value="__new">New build</option>
+                <hr />
+                @foreach (BuildSimple build in Model.AvailableBuilds ?? Array.Empty<BuildSimple>())
+                {
+                    <option value="@build.Id">@build.Name</option>
+                }
+            </select>
+        </div>
+        <div id="colCancelBuild" class="offset-8 col-1">
+            <button id="btnCancelBuild" class="btn btn-danger w-100">
+                <span class="h5">Cancel</span>
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div id="rowNewBuild" class="row d-none">
+        <div class="col-5">
+            <h3>New Build: <span id="newBuild_buildNameDisplay"></span></h3>
+            <form id="formNewBuild" method="post" action="@Url.Page("Editor", "NewBuild")">
+                <div class="row">
+                    <div class="col-4">
+                        <input id="newBuild_buildId" name="Id" type="text" class="form-control" placeholder="ID" />
+                    </div>
+                    <div class="col-4">
+                        <input id="newBuild_buildName" name="Name" type="text" class="form-control" placeholder="Name" />
+                    </div>
+                    <div class="col-4">
+                        <input id="newBuild_buildVersion" name="Version" type="text" class="form-control" placeholder="Version" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="offset-10 col-2">
+                        <button id="btnConfirmNewBuild" type="submit" class="btn btn-success w-100">Confirm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="rowEditBuild" class="row d-none">
+        <div id="editBuild_columnStep" class="col-4">
+        </div>
+        <div id="editBuild_columnPoint" class="col-4 border-start">
+        </div>
+        <div id="editBuild_columnSubpoint" class="col-4 border-start">
+        </div>
+    </div>
+</div>

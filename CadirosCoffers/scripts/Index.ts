@@ -1,4 +1,5 @@
-﻿import { Build, Act, Step, StepPoint, GemLink, Gem, TargetLevel } from './build.js';
+﻿import { ready } from './ready.js';
+import { Build, Act, Step, StepPoint, GemLink, Gem, TargetLevel } from './build.js';
 import { CampaignMap, ZoneMap } from './map.js';
 
 let activeBuild: Build;
@@ -399,17 +400,6 @@ function getGemClass(gem: Gem): string {
             return 'intelligence';
         default:
             return '';
-    }
-}
-// #endregion
-
-
-// #region ready()
-function ready(fn: () => void) {
-    if (document.readyState !== 'loading') {
-        fn();
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
     }
 }
 // #endregion

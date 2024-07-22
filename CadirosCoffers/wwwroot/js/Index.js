@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { ready } from './ready.js';
 import { Build } from './build.js';
 import { CampaignMap } from './map.js';
 let activeBuild;
@@ -314,16 +315,6 @@ function getGemClass(gem) {
             return 'intelligence';
         default:
             return '';
-    }
-}
-// #endregion
-// #region ready()
-function ready(fn) {
-    if (document.readyState !== 'loading') {
-        fn();
-    }
-    else {
-        document.addEventListener('DOMContentLoaded', fn);
     }
 }
 // #endregion

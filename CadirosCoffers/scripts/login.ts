@@ -1,11 +1,13 @@
-﻿ready(() => {
-    document.querySelector('#formLoginModal').addEventListener('submit', (e) => {
-        formLoginModal_Submit(e);
-    });
+﻿import { ready } from './ready.js';
 
-    document.querySelector('#formLogin').addEventListener('submit', (e) => {
-        formLogin_Submit(e);
-    });
+ready(() => {
+    //document.querySelector('#formLoginModal').addEventListener('submit', (e) => {
+    //    formLoginModal_Submit(e);
+    //});
+
+    //document.querySelector('#formLogin').addEventListener('submit', (e) => {
+    //    formLogin_Submit(e);
+    //});
 });
 
 
@@ -44,17 +46,8 @@ async function formLogin_Submit(e: Event) {
         },
         body: JSON.stringify(data)
     });
-    const responseData = await response.json();
-    console.log(responseData);
-}
+    //const responseData = await response.json();
+    //console.log(responseData);
 
-
-// #region ready()
-function ready(fn: () => void) {
-    if (document.readyState !== 'loading') {
-        fn();
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
+    //localStorage.setItem('jwt', responseData);
 }
-// #endregion

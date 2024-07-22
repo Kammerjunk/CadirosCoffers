@@ -1,8 +1,13 @@
 using CadirosCoffers.Data;
 using CadirosCoffers.Model;
 using CadirosCoffers.Options;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,6 +20,7 @@ namespace CadirosCoffers.Pages
         private readonly IConfiguration _configuration;
 
         private readonly DatabaseOptions _databaseOptions;
+        private readonly AuthOptions _authenticationOptions;
 
         private readonly BuildsRepository _buildsRepository;
 
@@ -26,6 +32,9 @@ namespace CadirosCoffers.Pages
             _databaseOptions = new DatabaseOptions();
             _configuration.GetSection(DatabaseOptions.Database).Bind(_databaseOptions);
 
+            _authenticationOptions = new AuthOptions();
+            _configuration.GetSection(AuthOptions.Authentication).Bind(_authenticationOptions);
+
             _buildsRepository = new(_databaseOptions);
         }
 
@@ -34,7 +43,7 @@ namespace CadirosCoffers.Pages
             AvailableBuilds = _buildsRepository.GetAvailableBuilds();
         }
 
-        public IActionResult OnPost([FromBody]LoginPostViewModel loginPostViewModel)
+        public async Task<IActionResult> OnPost(LoginPostViewModel loginPostViewModel)
         {
             string username = loginPostViewModel.Username;
             string password = loginPostViewModel.Password;
@@ -47,9 +56,52 @@ namespace CadirosCoffers.Pages
 
             bool passwordMatch = _buildsRepository.GetPasswordMatch(username, hash);
 
-            return new JsonResult(passwordMatch);
+            if (passwordMatch)
+            {
+                User user = new User(username, hash, salt);
+                List<Claim> claims =
+                [
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Role, "Administrator")
+                ];
+
+                ClaimsIdentity claimsIdentity = new(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                AuthenticationProperties authProperties = new()
+                {
+                    AllowRefresh = true,
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.AddDays(1),
+                };
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties
+                );
+
+                var asdf = HttpContext.Request.Path;
+
+                if (loginPostViewModel.Path != null)
+                {
+                    string redirect = loginPostViewModel.Path.Split("=%2F").Last();
+                    return RedirectToPage(redirect);
+                }
+                else
+                {
+                    return RedirectToPage("Index");
+            }
+        }
+
+            return new JsonResult(0);
         }
 
     }
-    public record struct LoginPostViewModel(string Username, string Password);
+
+    public class LoginPostViewModel
+    {
+        public string Username { get; set; } = String.Empty;
+        public string Password { get; set; } = String.Empty;
+        public string? Path { get; set; } = String.Empty;
+    }
 }

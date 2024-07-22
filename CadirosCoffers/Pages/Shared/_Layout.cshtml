@@ -35,6 +35,14 @@
                     </li>
                 }
             </ul>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <div class="d-flex row align-items-center mb-3">
+                    <a class="col text-decoration-none text-white" href="/Editor">
+                        <span class="fs-6">Build Editor</span>
+                    </a>
+                </div>
+            }
             <hr>
             <div class="d-flex row align-items-center mb-3">
                 <a id="btnCollapse" class="col text-decoration-none float-left text-white" href="#">

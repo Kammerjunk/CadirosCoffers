@@ -7,13 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { ready } from './ready.js';
 ready(() => {
-    document.querySelector('#formLoginModal').addEventListener('submit', (e) => {
-        formLoginModal_Submit(e);
-    });
-    document.querySelector('#formLogin').addEventListener('submit', (e) => {
-        formLogin_Submit(e);
-    });
+    //document.querySelector('#formLoginModal').addEventListener('submit', (e) => {
+    //    formLoginModal_Submit(e);
+    //});
+    //document.querySelector('#formLogin').addEventListener('submit', (e) => {
+    //    formLogin_Submit(e);
+    //});
 });
 function formLoginModal_Submit(e) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -46,18 +47,9 @@ function formLogin_Submit(e) {
             },
             body: JSON.stringify(data)
         });
-        const responseData = yield response.json();
-        console.log(responseData);
+        //const responseData = await response.json();
+        //console.log(responseData);
+        //localStorage.setItem('jwt', responseData);
     });
 }
-// #region ready()
-function ready(fn) {
-    if (document.readyState !== 'loading') {
-        fn();
-    }
-    else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-// #endregion
 //# sourceMappingURL=login.js.map
