@@ -4,11 +4,13 @@
     "noImplicitAny": false,
     "noEmitOnError": true,
     "removeComments": false,
+    "esModuleInterop": true,
     "sourceMap": true,
     "target": "es6",
     "outDir": "wwwroot/js"
   },
   "include": [
-    "scripts/**/*"
+    "scripts/**/*",
+    "**/node_modules/*"
   ]
 }

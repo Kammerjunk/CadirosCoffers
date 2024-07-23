@@ -45,3 +45,13 @@ export class TargetLevel {
     level: string;
     progress: string;
 }
+
+export class StepCategory {
+    categoryId: string;
+    text: string;
+}
+
+export class Attribute {
+    attributeId: string;
+    name: string;
+}

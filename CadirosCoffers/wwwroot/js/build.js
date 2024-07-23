@@ -12,4 +12,8 @@ export class Gem {
 }
 export class TargetLevel {
 }
+export class StepCategory {
+}
+export class Attribute {
+}
 //# sourceMappingURL=build.js.map

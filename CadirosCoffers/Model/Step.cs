@@ -1,13 +1,30 @@
 ﻿namespace CadirosCoffers.Model
 {
-    public class Step(long stepId, long stepIndex, string category, string name)
+    public class Step
     {
-        public long StepId { get; set; } = stepId;
-        public long StepIndex { get; set; } = stepIndex;
-        public string Category { get; set; } = category;
-        public string Name { get; set; } = name;
+        public Step(long stepId, long stepIndex, string category, string name)
+        {
+            StepId = stepId;
+            StepIndex = stepIndex;
+            Category = category;
+            Name = name;
 
-        public List<StepPoint> Points { get; } = [];
+            Points = [];
+        }
+
+        public Step(long stepId)
+        {
+            StepId = stepId;
+
+            Points = [];
+        }
+
+        public long StepId { get; set; }
+        public long? StepIndex { get; set; }
+        public string? Category { get; set; }
+        public string? Name { get; set; }
+
+        public List<StepPoint> Points { get; }
 
         public void AddPoint(StepPoint point)
         {

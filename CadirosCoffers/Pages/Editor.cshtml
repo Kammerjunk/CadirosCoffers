@@ -29,7 +29,7 @@
         </div>
     </div>
     <hr />
-    <div id="rowNewBuild" class="row d-none">
+    <div id="newBuild" class="row d-none">
         <div class="col-5">
             <h3>New Build: <span id="newBuild_buildNameDisplay"></span></h3>
             <form id="formNewBuild" method="post" action="@Url.Page("Editor", "NewBuild")">
@@ -52,12 +52,53 @@
             </form>
         </div>
     </div>
-    <div id="rowEditBuild" class="row d-none">
-        <div id="editBuild_columnStep" class="col-4">
+    <div id="editBuild" class="d-none">
+        <div id="editBuild_rowActSelection" class="row">
+            <div class="offset-1 col-10">
+                <div id="editBuild_acts" class="btn-group w-100" role="group">
+                </div>
+            </div>
         </div>
-        <div id="editBuild_columnPoint" class="col-4 border-start">
+        <div id="editBuild_rowActItems" class="row mt-3">
+            <div id="editBuild_columnStep_container" class="col-4 d-none">
+                <h4>Steps</h4>
+                <ul id="editBuild_columnStep">
+
+                </ul>
+                <div id="editBuild_columnStep_Buttons" class="d-flex row align-items-center">
+
+                </div>
+            </div>
+            <div id="editBuild_columnPoint_container" class="col-4 border-start d-none">
+                <h4>Step Points</h4>
+                <div id="editBuild_columnPoint">
+                </div>
+                <div id="editBuild_columnPoint_Buttons" class="d-flex row align-items-center">
+                </div>
+            </div>
+            <div id="editBuild_columnSubpoint_container" class="col-4 border-start d-none">
+                <h4>Subpoints</h4>
+                <div id="editBuild_columnSubpoint">
+                </div>
+                <div id="editBuild_columnSubpoint_Buttons" class="d-flex row align-items-center">
+                </div>
+            </div>
         </div>
-        <div id="editBuild_columnSubpoint" class="col-4 border-start">
+        <div id="editBuild_rowActExtras" class="row mt-3 border-top">
+            <div id="editBuild_columnLinks_container" class="col-4 d-none">
+                <h4>Act Links</h4>
+                <div id="editBuild_columnLinks">
+                </div>
+                <div id="editBuild_columnLinks_Buttons" class="d-flex row align-items-center">
+                </div>
+            </div>
+            <div id="editBuild_columnTargets_container" class="col-4 offset-4 d-none">
+                <h4>Target Levels</h4>
+                <div id="editBuild_columnTargets">
+                </div>
+                <div id="editBuild_columnTargets_Buttons" class="d-flex row align-items-center">
+                </div>
+            </div>
         </div>
     </div>
 </div>

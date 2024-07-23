@@ -6,4 +6,5 @@
 FROM GuideStepPoint stepPoint
 WHERE
 	StepId = @StepId
+	AND ParentPoint IS NULL
 ORDER BY StepPointIndex

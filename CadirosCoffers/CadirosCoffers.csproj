@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="scripts\spinnerFetch.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.7" />
@@ -35,7 +39,16 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\fontawesome\" />
-    <Folder Include="wwwroot\res\zones\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="scripts\spinnerFetch.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\js\editorClasses.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
