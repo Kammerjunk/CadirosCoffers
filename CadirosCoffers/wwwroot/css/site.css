@@ -164,3 +164,31 @@ main
 .lightning {
     color: #ADAA47 !important;
 }
+
+.btn.btn-dexterity {
+    color: #000;
+/*    background-color: #70FF70 !important;*/
+    background-color: #00b700 !important;
+}
+
+.btn.btn-intelligence {
+    background-color: #7070FF !important;
+    background-color: #0000b7 !important;
+}
+
+.btn.btn-strength {
+    background-color: #E05030 !important;
+    background-color: #762412 !important;
+}
+
+.btn.btn-fire {
+    background-color: #B97123 !important;
+}
+
+.btn.btn-cold {
+    background-color: #3F6DB3 !important;
+}
+
+.btn.btn-lightning {
+    background-color: #ADAA47 !important;
+}

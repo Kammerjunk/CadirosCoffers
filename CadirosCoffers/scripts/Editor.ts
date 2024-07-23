@@ -848,19 +848,57 @@ function constructStepModal() {
 function constructPointModal() {
     const modalBody = document.createElement('div');
 
-    const row = document.createElement('div');
-    row.classList.add('row');
-    modalBody.appendChild(row);
+    const rowDesc = document.createElement('div');
+    rowDesc.classList.add('row');
 
     const colDesc = document.createElement('div');
     colDesc.classList.add('col');
-    row.appendChild(colDesc);
 
     const textarea = document.createElement('textarea');
     textarea.id = 'pointEditTextDesc';
     textarea.classList.add('form-control');
     textarea.placeholder = 'Point text';
     textarea.rows = 7;
+
+
+    const rowShortcutsAttributes = document.createElement('div');
+    rowShortcutsAttributes.classList.add('d-flex', 'row', 'align-items-center', 'mb-2');
+
+    const colStr = document.createElement('div');
+    colStr.classList.add('col');
+
+    const btnStr = document.createElement('button');
+    btnStr.classList.add('btn', 'btn-strength');
+    btnStr.innerText = 'Strength';
+    btnStr.onclick = (e) => { dyeText(textarea, 'strength'); };
+
+    const colDex = document.createElement('div');
+    colDex.classList.add('col');
+
+    const btnDex = document.createElement('button');
+    btnDex.classList.add('btn', 'btn-dexterity');
+    btnDex.innerHTML = 'Dexterity';
+    btnDex.onclick = (e) => { dyeText(textarea, 'dexterity'); };
+
+    const colInt = document.createElement('div');
+    colInt.classList.add('col');
+
+    const btnInt = document.createElement('button');
+    btnInt.classList.add('btn', 'btn-intelligence');
+    btnInt.innerHTML = 'Intelligence';
+    btnInt.onclick = (e) => { dyeText(textarea, 'intelligence'); };
+
+
+    modalBody.appendChild(rowShortcutsAttributes);
+    rowShortcutsAttributes.appendChild(colStr);
+    rowShortcutsAttributes.appendChild(colDex);
+    rowShortcutsAttributes.appendChild(colInt);
+    colStr.appendChild(btnStr);
+    colDex.appendChild(btnDex);
+    colInt.appendChild(btnInt);
+
+    modalBody.appendChild(rowDesc);
+    rowDesc.appendChild(colDesc);
     colDesc.appendChild(textarea);
 
     return constructModal('pointModal', modalBody);
@@ -1021,8 +1059,33 @@ function constructModal(modalId: string, modalBody: HTMLElement) {
 
     return modal;
 }
+
+function constructDyeButton() {
+
+}
+
+function dyeText(input: HTMLTextAreaElement | HTMLInputElement, dyeClass) {
+    const spanStart = `<span class="${dyeClass}">`;
+    const spanEnd = '</span>';
+
+    if (input.selectionStart || input.selectionStart == 0) {
+
+
+        var startPos = input.selectionStart;
+        var endPos = input.selectionEnd;
+
+        const spanInner = input.value.substring(startPos, endPos);
+
+        input.value = input.value.substring(0, startPos)
+            + spanStart + spanInner + spanEnd
+            + input.value.substring(endPos, input.value.length);
+    } else {
+        input.value += spanStart + spanEnd;
+    }
+
+    return input;
+}
 // #endregion modals
-// #endregion
 
 // #region Static content
 function constructActButtons(): void {

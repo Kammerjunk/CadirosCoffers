@@ -14,6 +14,11 @@ let activeBuild;
 let campaignMap;
 ready(() => __awaiter(void 0, void 0, void 0, function* () {
     yield constructStaticContents();
+    for (const bigImageElement of document.querySelectorAll('.bigImage')) {
+        bigImageElement.addEventListener('click', () => {
+            hideBigImage();
+        });
+    }
     for (const buildSelector of document.querySelectorAll('.build-selector')) {
         buildSelector.addEventListener('click', (e) => {
             buildSelector_Click(e);
@@ -156,6 +161,10 @@ function constructZoneLayouts(actNumber) {
         firstColumn = !firstColumn;
     }
     return zoneLayouts;
+}
+function hideBigImage() {
+    const bigImageContainer = document.querySelector('#zoneLayoutBigContainer');
+    bigImageContainer.classList.add('d-none');
 }
 function toggleActsCollapse() {
     let show = true;

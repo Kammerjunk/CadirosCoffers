@@ -8,6 +8,12 @@ let campaignMap: CampaignMap;
 ready(async () => {
     await constructStaticContents();
 
+    for (const bigImageElement of document.querySelectorAll('.bigImage')) {
+        bigImageElement.addEventListener('click', () => {
+            hideBigImage();
+        })
+    }
+
     for (const buildSelector of document.querySelectorAll('.build-selector')) {
         buildSelector.addEventListener('click', (e) => {
             buildSelector_Click(e);
@@ -197,6 +203,11 @@ function constructZoneLayouts(actNumber: number): Element {
 
 
     return zoneLayouts;
+}
+
+function hideBigImage(): void {
+    const bigImageContainer = document.querySelector('#zoneLayoutBigContainer');
+    bigImageContainer.classList.add('d-none');
 }
 
 function toggleActsCollapse(): void {
