@@ -59,16 +59,14 @@ namespace CadirosCoffers.Services.GuideService
 
         private void BuildStep(Step step)
         {
-            IEnumerable<StepPoint> stepPoints = Repository.GetPointsForStep(step.StepId);
+            IEnumerable<StepPoint> points = Repository.GetPointsForStep(step.StepId);
 
-            step.AddPoints(stepPoints.Where(p => p.ParentPointId == null).OrderBy(p => p.StepPointIndex));
+            step.AddPoints(points.Where(p => p.ParentPointId == null).OrderBy(p => p.StepPointIndex));
 
-            foreach (IGrouping<long?, StepPoint> subpointGroup in stepPoints.Where(p => p.ParentPointId != null).GroupBy(p => p.ParentPointId))
+            foreach (StepPoint point in points)
             {
-                StepPoint parentStep = stepPoints.First(p => p.StepPointId == subpointGroup.Key);
-                IEnumerable<StepPoint> subpoints = subpointGroup.ToList();
-
-                parentStep.AddSubpoints(subpoints.OrderBy(p => p.StepPointIndex));
+                IEnumerable<StepPoint> subpoints = Repository.GetSubpointsForPoint(point.StepPointId);
+                point.AddSubpoints(subpoints);
             }
         }
 

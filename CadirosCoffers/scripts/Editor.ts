@@ -320,7 +320,7 @@ async function constructAct(actNumber: number, keepPoints: boolean = false): Pro
         setupStepModalForCreate();
     }));
 
-    makeListDraggable(column as HTMLDivElement);
+    makeListDraggable(column as HTMLDivElement, saveStepOrder);
 }
 
 async function constructStep(stepId: number, keepSubpoints: boolean = false): Promise<void> {
@@ -366,6 +366,8 @@ async function constructStep(stepId: number, keepSubpoints: boolean = false): Pr
     buttons.appendChild(constructColumnButtons('Point', 'pointModal', (e) => {
         setupPointModalForCreate();
     }));
+
+    makeListDraggable(column as HTMLDivElement, savePointOrder);
 }
 
 async function constructPoint(pointId: number): Promise<void> {
@@ -525,9 +527,21 @@ async function saveStepOrder() {
         orders.push(new ItemOrder(parseInt(id), stepIndex++));
     }
 
-    console.log(orders);
-
     await goFetch('POST', '/Editor?handler=StepOrder', orders);
+}
+
+async function savePointOrder() {
+    const pointColumn = document.querySelector('#editBuild_columnPoint') as HTMLDivElement;
+
+    let orders: ItemOrder[] = [];
+    let pointIndex = 1;
+    for (const point of pointColumn.children) {
+        const id = (point as HTMLElement).dataset.id;
+
+        orders.push(new ItemOrder(parseInt(id), pointIndex++));
+    }
+
+    await goFetch('POST', '/Editor?handler=PointOrder', orders);
 }
 
 function getItemIdDataOfSelectedWrench(columnId: string): string {
@@ -1118,7 +1132,7 @@ function constructActButtons(): void {
 // #endregion
 
 // #region Draggable
-function makeListDraggable(list: Element) {
+function makeListDraggable(list: Element, onDragend: () => void) {
     let draggedItem = null;
 
     list.addEventListener('dragstart', (e) => {
@@ -1132,7 +1146,7 @@ function makeListDraggable(list: Element) {
         setTimeout(() => {
             (e.target as HTMLElement).style.display = '';
             draggedItem = null;
-            saveStepOrder();
+            onDragend();
         }, 0);
     });
 

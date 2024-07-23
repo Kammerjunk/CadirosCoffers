@@ -157,6 +157,16 @@ namespace CadirosCoffers.Pages
             return new OkResult();
         }
 
+        public IActionResult OnPostPointOrder([FromBody] List<ItemOrderPostViewModel> orders)
+        {
+            foreach (ItemOrderPostViewModel order in orders)
+            {
+                _buildsRepository.UpdatePointOrder(order.ItemId, order.Index);
+            }
+
+            return new OkResult();
+        }
+
         public IActionResult OnPutStep([FromBody] StepPutViewModel step)
         {
             _buildsRepository.UpdateStep(step.StepId, step.Category, step.Name);

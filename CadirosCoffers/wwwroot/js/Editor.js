@@ -306,7 +306,7 @@ function constructAct(actNumber_1) {
         buttons.appendChild(constructColumnButtons('Step', 'stepModal', (e) => {
             setupStepModalForCreate();
         }));
-        makeListDraggable(column);
+        makeListDraggable(column, saveStepOrder);
     });
 }
 function constructStep(stepId_1) {
@@ -343,6 +343,7 @@ function constructStep(stepId_1) {
         buttons.appendChild(constructColumnButtons('Point', 'pointModal', (e) => {
             setupPointModalForCreate();
         }));
+        makeListDraggable(column, savePointOrder);
     });
 }
 function constructPoint(pointId) {
@@ -471,8 +472,19 @@ function saveStepOrder() {
             const id = step.dataset.id;
             orders.push(new ItemOrder(parseInt(id), stepIndex++));
         }
-        console.log(orders);
         yield goFetch('POST', '/Editor?handler=StepOrder', orders);
+    });
+}
+function savePointOrder() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const pointColumn = document.querySelector('#editBuild_columnPoint');
+        let orders = [];
+        let pointIndex = 1;
+        for (const point of pointColumn.children) {
+            const id = point.dataset.id;
+            orders.push(new ItemOrder(parseInt(id), pointIndex++));
+        }
+        yield goFetch('POST', '/Editor?handler=PointOrder', orders);
     });
 }
 function getItemIdDataOfSelectedWrench(columnId) {
@@ -942,7 +954,7 @@ function constructActButtons() {
 }
 // #endregion
 // #region Draggable
-function makeListDraggable(list) {
+function makeListDraggable(list, onDragend) {
     let draggedItem = null;
     list.addEventListener('dragstart', (e) => {
         draggedItem = e.target;
@@ -954,7 +966,7 @@ function makeListDraggable(list) {
         setTimeout(() => {
             e.target.style.display = '';
             draggedItem = null;
-            saveStepOrder();
+            onDragend();
         }, 0);
     });
     list.addEventListener('dragover', (e) => {

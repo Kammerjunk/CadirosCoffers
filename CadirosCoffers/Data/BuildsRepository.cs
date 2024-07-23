@@ -112,6 +112,15 @@ namespace CadirosCoffers.Data
             conn.Execute(GetQueryText("UpdateStepOrder"), parameters);
         }
 
+        public void UpdatePointOrder(int pointId, int index)
+        {
+            var parameters = new { PointId = pointId, Index = index };
+
+            using SqliteConnection conn = new(databaseOptions.ConnectionString);
+            conn.Open();
+            conn.Execute(GetQueryText("UpdatePointOrder"), parameters);
+        }
+
         public int GetNextStepIndexForBuildAct(string buildId, int actNumber)
         {
             var parameters = new { BuildId = buildId, ActNumber = actNumber };
