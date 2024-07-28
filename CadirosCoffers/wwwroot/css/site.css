@@ -141,6 +141,13 @@ main
 }
 
 
+.collapsing {
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+}
+
+
 .dexterity {
     color: #70FF70 !important;
 }

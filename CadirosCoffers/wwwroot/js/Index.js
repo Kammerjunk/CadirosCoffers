@@ -48,10 +48,10 @@ function constructStaticContents() {
         for (let i = 1; i <= 10; i++) {
             mainContent.appendChild(constructActHeader(i));
             const actRow = constructActRow(i);
-            actRow.append(constructLevellingStepsContainer(i));
-            actRow.append(constructGemLinksContainer(i));
             actRow.append(constructZoneLayoutsContainer(i));
             actRow.append(constructTargetLevelsContainer(i));
+            actRow.append(constructGemLinksContainer(i));
+            actRow.append(constructLevellingStepsContainer(i));
             mainContent.append(actRow);
             constructZoneLayouts(i);
         }
@@ -256,19 +256,37 @@ function constructGemLinks(actNumber, links) {
     const container = document.querySelector(`#act${actNumber}-gemLinks`);
     for (const link of links) {
         const firstGem = link.gems[0];
-        const linkHead = document.createElement('u');
-        linkHead.innerText = getGemText(firstGem);
-        linkHead.classList.add(getGemClass(firstGem));
-        container.append(linkHead);
+        const firstGemCheckboxId = `link-${link.gemLinkId}_gem-${firstGem.gemId}`;
+        const linkHeadContainer = document.createElement('div');
+        container.appendChild(linkHeadContainer);
+        const linkHead = document.createElement('input');
+        linkHead.classList.add('form-check-input');
+        linkHead.type = 'checkbox';
+        linkHead.id = firstGemCheckboxId;
+        linkHeadContainer.appendChild(linkHead);
+        const linkHeadLabel = document.createElement('label');
+        linkHeadLabel.classList.add('form-check-label', 'text-decoration-underline', getGemClass(firstGem));
+        linkHeadLabel.setAttribute('for', firstGemCheckboxId);
+        linkHeadLabel.innerText = getGemText(firstGem);
+        linkHeadContainer.appendChild(linkHeadLabel);
         const list = document.createElement('ul');
         list.classList.add('list-group', 'list-unstyled', 'pb-3');
         link.gems.slice(1).forEach(function (gem) {
-            let gemText = getGemText(gem);
-            let gemClass = getGemClass(gem);
-            const listItem = document.createElement('li');
-            listItem.classList.add(gemClass);
-            listItem.innerText = gemText;
-            list.append(listItem);
+            const gemText = getGemText(gem);
+            const gemClass = getGemClass(gem);
+            const gemCheckboxId = `link-${link.gemLinkId}_gem-${gem.gemId}`;
+            const listItemContainer = document.createElement('div');
+            list.append(listItemContainer);
+            const listItem = document.createElement('input');
+            listItem.classList.add('form-check-input');
+            listItem.type = 'checkbox';
+            listItem.id = gemCheckboxId;
+            listItemContainer.appendChild(listItem);
+            const listItemLabel = document.createElement('label');
+            listItemLabel.classList.add('form-check-label', gemClass);
+            listItemLabel.setAttribute('for', gemCheckboxId);
+            listItemLabel.innerText = gemText;
+            listItemContainer.appendChild(listItemLabel);
         });
         container.append(list);
     }
